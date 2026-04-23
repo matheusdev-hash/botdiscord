@@ -152,6 +152,10 @@ Use exatamente este template, sem pular seções:
 
 🎬 Filme: [Nome do Filme em Português (Ano)]
 🔍 Título Original: [Título original em inglês ou idioma nativo]
+👤 Diretor: [Nome do Diretor]
+
+📖 Sinopse:
+[Sinopse do filme — objetiva e sem spoilers]
 
 🧠 Análise:
 [Parágrafo(s) de análise — envolvente, no estilo escolhido]
@@ -189,20 +193,23 @@ class CinemaAgent:
         self.client = AsyncGroq(api_key=api_key)
         self.omdb_key = omdb_key
 
-    async def _get_imdb_rating(self, title: str, year: Optional[str] = None) -> Optional[str]:
+    async def _get_movie_data(self, title: str, year: Optional[str] = None) -> dict:
         try:
-            params = {"t": title, "apikey": self.omdb_key}
+            params = {"t": title, "apikey": self.omdb_key, "plot": "full"}
             if year:
                 params["y"] = year
             async with httpx.AsyncClient(timeout=5) as http:
                 r = await http.get(OMDB_URL, params=params)
                 data = r.json()
-                print(f"[OMDB] título='{title}' ano={year} → {data.get('imdbRating')} (Response={data.get('Response')})")
-                if data.get("Response") == "True" and data.get("imdbRating") not in (None, "N/A"):
-                    return data["imdbRating"]
+                print(f"[OMDB] título='{title}' ano={year} → rating={data.get('imdbRating')} (Response={data.get('Response')})")
+                if data.get("Response") == "True":
+                    def val(k):
+                        v = data.get(k)
+                        return v if v and v != "N/A" else None
+                    return {"rating": val("imdbRating"), "director": val("Director"), "plot": val("Plot")}
         except Exception as e:
             print(f"[OMDB] erro: {e}")
-        return None
+        return {"rating": None, "director": None, "plot": None}
 
     async def analyze(self, user_message: str, style: str = DEFAULT_STYLE) -> str:
         if style not in STYLES:
@@ -234,14 +241,23 @@ class CinemaAgent:
 
         print(f"[OMDB] buscando título='{title}' ano={year}")
         if title:
-            imdb_rating = await self._get_imdb_rating(title, year)
-            if imdb_rating:
+            omdb = await self._get_movie_data(title, year)
+
+            if omdb["rating"]:
+                text = re.sub(r"⭐ Nota:.*", f"⭐ Nota: {omdb['rating']}/10 (IMDB)", text)
+
+            if omdb["director"]:
+                text = re.sub(r"👤 Diretor:.*", f"👤 Diretor: {omdb['director']}", text)
+
+            if omdb["plot"]:
                 text = re.sub(
-                    r"⭐ Nota:.*",
-                    f"⭐ Nota: {imdb_rating}/10 (IMDB)",
+                    r"📖 Sinopse:\n.*?(?=\n🧠|\n⭐|\Z)",
+                    f"📖 Sinopse:\n{omdb['plot']}",
                     text,
+                    flags=re.DOTALL,
                 )
-                # Remove a linha do título original da resposta final
-                text = re.sub(r"🔍 Título Original:.*\n?", "", text)
+                text = re.sub(r"\n🧠 Análise:\n.*?(?=\n⭐|\Z)", "", text, flags=re.DOTALL)
+
+            text = re.sub(r"🔍 Título Original:.*\n?", "", text)
 
         return text
