@@ -162,14 +162,15 @@ Use exatamente este template, sem pular seções:
 
 ⭐ Nota: [X.X / 10]
 
-✅ Pontos fortes:
-- [ponto 1]
-- [ponto 2]
-- [ponto 3 se aplicável]
+🎭 Elenco principal:
+- [Ator 1 — personagem]
+- [Ator 2 — personagem]
+- [Ator 3 — personagem se aplicável]
 
-❌ Pontos fracos:
-- [ponto 1]
-- [ponto 2]
+📺 Onde assistir:
+- [Plataforma 1]
+- [Plataforma 2 se aplicável]
+(Se não souber com certeza, escreva "Consulte o JustWatch")
 
 👥 Indicado para:
 [Descreva o perfil do espectador que vai curtir. Seja específico.]
@@ -219,10 +220,10 @@ class CinemaAgent:
                     def val(k):
                         v = data.get(k)
                         return v if v and v != "N/A" else None
-                    return {"rating": val("imdbRating"), "director": val("Director"), "plot": val("Plot")}
+                    return {"rating": val("imdbRating"), "director": val("Director"), "plot": val("Plot"), "actors": val("Actors")}
         except Exception as e:
             print(f"[OMDB] erro: {e}")
-        return {"rating": None, "director": None, "plot": None}
+        return {"rating": None, "director": None, "plot": None, "actors": None}
 
     async def analyze(self, user_message: str, style: str = DEFAULT_STYLE) -> str:
         if style not in STYLES:
@@ -261,6 +262,15 @@ class CinemaAgent:
 
             if omdb["director"]:
                 text = re.sub(r"👤 Diretor:.*", f"👤 Diretor: {omdb['director']}", text)
+
+            if omdb["actors"]:
+                actors_lines = "\n".join(f"- {a.strip()}" for a in omdb["actors"].split(","))
+                text = re.sub(
+                    r"🎭 Elenco principal:\n.*?(?=\n📺|\n⭐|\Z)",
+                    f"🎭 Elenco principal:\n{actors_lines}",
+                    text,
+                    flags=re.DOTALL,
+                )
 
             if omdb["plot"]:
                 plot_pt = await self._translate_to_pt(omdb["plot"])
