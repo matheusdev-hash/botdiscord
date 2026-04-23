@@ -193,6 +193,19 @@ class CinemaAgent:
         self.client = AsyncGroq(api_key=api_key)
         self.omdb_key = omdb_key
 
+    async def _translate_to_pt(self, text: str) -> str:
+        try:
+            response = await self.client.chat.completions.create(
+                model="llama-3.3-70b-versatile",
+                max_tokens=512,
+                messages=[
+                    {"role": "user", "content": f"Traduza para o português do Brasil, sem adicionar nada além da tradução:\n\n{text}"},
+                ],
+            )
+            return response.choices[0].message.content.strip()
+        except Exception:
+            return text
+
     async def _get_movie_data(self, title: str, year: Optional[str] = None) -> dict:
         try:
             params = {"t": title, "apikey": self.omdb_key, "plot": "full"}
@@ -250,9 +263,10 @@ class CinemaAgent:
                 text = re.sub(r"👤 Diretor:.*", f"👤 Diretor: {omdb['director']}", text)
 
             if omdb["plot"]:
+                plot_pt = await self._translate_to_pt(omdb["plot"])
                 text = re.sub(
                     r"📖 Sinopse:\n.*?(?=\n🧠|\n⭐|\Z)",
-                    f"📖 Sinopse:\n{omdb['plot']}",
+                    f"📖 Sinopse:\n{plot_pt}",
                     text,
                     flags=re.DOTALL,
                 )
