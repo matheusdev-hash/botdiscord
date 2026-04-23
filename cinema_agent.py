@@ -151,7 +151,7 @@ FORMATO OBRIGATÓRIO DA RESPOSTA
 Use exatamente este template, sem pular seções:
 
 🎬 Filme: [Nome do Filme em Português (Ano)]
-🔍 Título Original: [Título original em inglês ou idioma nativo]
+> ⭐ **Nota: [X.X / 10]**
 👤 Diretor: [Nome do Diretor]
 
 📖 Sinopse:
@@ -159,8 +159,6 @@ Use exatamente este template, sem pular seções:
 
 🧠 Análise:
 [Parágrafo(s) de análise — envolvente, no estilo escolhido]
-
-⭐ Nota: [X.X / 10]
 
 🎭 Elenco principal:
 - [Ator 1 — personagem]
@@ -258,7 +256,7 @@ class CinemaAgent:
             omdb = await self._get_movie_data(title, year)
 
             if omdb["rating"]:
-                text = re.sub(r"⭐ Nota:.*", f"⭐ Nota: {omdb['rating']}/10 (IMDB)", text)
+                text = re.sub(r"> ⭐ \*\*Nota:.*?\*\*", f"> ⭐ **Nota: {omdb['rating']}/10 (IMDB)**", text)
 
             if omdb["director"]:
                 text = re.sub(r"👤 Diretor:.*", f"👤 Diretor: {omdb['director']}", text)
