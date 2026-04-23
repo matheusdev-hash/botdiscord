@@ -27,6 +27,17 @@ STYLE_DISPLAY = {
     "emocional": "💙 Emocional",
     "casual": "😎 Casual",
     "ácido": "🔪 Ácido",
+    "ação": "💥 Ação",
+    "drama": "🎭 Drama",
+    "comédia": "😂 Comédia",
+    "terror": "👻 Terror",
+    "suspense": "🔦 Suspense",
+    "romance": "❤️ Romance",
+    "ficção científica": "🚀 Ficção Científica",
+    "fantasia": "🧙 Fantasia",
+    "animação": "🎨 Animação",
+    "documentário": "🎥 Documentário",
+    "herói": "🦸 Herói",
 }
 
 intents = discord.Intents.default()
@@ -110,6 +121,17 @@ async def on_ready():
         app_commands.Choice(name="💙 Emocional — foco nos sentimentos e emoções", value="emocional"),
         app_commands.Choice(name="😎 Casual — leve, direto, como um amigo", value="casual"),
         app_commands.Choice(name="🔪 Ácido — crítico, sarcástico e afiado", value="ácido"),
+        app_commands.Choice(name="💥 Ação — foco em adrenalina e sequências de ação", value="ação"),
+        app_commands.Choice(name="🎭 Drama — foco em personagens e profundidade emocional", value="drama"),
+        app_commands.Choice(name="😂 Comédia — foco em humor, timing e leveza", value="comédia"),
+        app_commands.Choice(name="👻 Terror — foco em atmosfera, tensão e medo", value="terror"),
+        app_commands.Choice(name="🔦 Suspense — foco em tensão, twists e narrativa", value="suspense"),
+        app_commands.Choice(name="❤️ Romance — foco em química e emoções do casal", value="romance"),
+        app_commands.Choice(name="🚀 Ficção Científica — foco em ideias e world building", value="ficção científica"),
+        app_commands.Choice(name="🧙 Fantasia — foco em universo, magia e lore", value="fantasia"),
+        app_commands.Choice(name="🎨 Animação — foco em técnica visual e mensagem", value="animação"),
+        app_commands.Choice(name="🎥 Documentário — foco em rigor, impacto e ponto de vista", value="documentário"),
+        app_commands.Choice(name="🦸 Herói — foco em universo expandido e espetáculo", value="herói"),
     ]
 )
 async def cinema_command(
@@ -147,6 +169,17 @@ async def cinema_command(
         app_commands.Choice(name="💙 Emocional — foco nos sentimentos e emoções", value="emocional"),
         app_commands.Choice(name="😎 Casual — leve, direto, como um amigo", value="casual"),
         app_commands.Choice(name="🔪 Ácido — crítico, sarcástico e afiado", value="ácido"),
+        app_commands.Choice(name="💥 Ação — foco em adrenalina e sequências de ação", value="ação"),
+        app_commands.Choice(name="🎭 Drama — foco em personagens e profundidade emocional", value="drama"),
+        app_commands.Choice(name="😂 Comédia — foco em humor, timing e leveza", value="comédia"),
+        app_commands.Choice(name="👻 Terror — foco em atmosfera, tensão e medo", value="terror"),
+        app_commands.Choice(name="🔦 Suspense — foco em tensão, twists e narrativa", value="suspense"),
+        app_commands.Choice(name="❤️ Romance — foco em química e emoções do casal", value="romance"),
+        app_commands.Choice(name="🚀 Ficção Científica — foco em ideias e world building", value="ficção científica"),
+        app_commands.Choice(name="🧙 Fantasia — foco em universo, magia e lore", value="fantasia"),
+        app_commands.Choice(name="🎨 Animação — foco em técnica visual e mensagem", value="animação"),
+        app_commands.Choice(name="🎥 Documentário — foco em rigor, impacto e ponto de vista", value="documentário"),
+        app_commands.Choice(name="🦸 Herói — foco em universo expandido e espetáculo", value="herói"),
     ]
 )
 async def estilo_command(

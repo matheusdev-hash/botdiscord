@@ -4,7 +4,12 @@ from typing import Optional
 import httpx
 from groq import AsyncGroq
 
-STYLES = ["técnico", "emocional", "casual", "ácido"]
+STYLES = [
+    "técnico", "emocional", "casual", "ácido",
+    "ação", "drama", "comédia", "terror", "suspense",
+    "romance", "ficção científica", "fantasia", "animação",
+    "documentário", "herói",
+]
 DEFAULT_STYLE = "casual"
 OMDB_URL = "http://www.omdbapi.com/"
 
@@ -61,6 +66,83 @@ Foco: elogiar ou destruir — mas com inteligência, nunca grosseria vazia.
 Pode zoar o filme mas também o próprio gênero, o diretor, o público.
 Seja engraçado e perspicaz. Sem papas na língua.
 Mesmo nos elogios, adicione uma pitada de ironia.
+
+**ação**
+Tom: energético, acelerado, visceral.
+Foco: sequências de ação, coreografia de luta, efeitos práticos vs CGI, ritmo e adrenalina.
+Avalie se a câmera favorece ou atrapalha a ação (câmera tremida vs planos abertos).
+Compara com referências do gênero (John Wick, Mad Max, Matrix).
+Seja direto: o filme entrega emoção ou é só barulho?
+
+**drama**
+Tom: reflexivo, denso, humanista.
+Foco: desenvolvimento de personagens, atuações, diálogos, profundidade dos temas.
+Explore como o filme trata questões universais (família, perda, identidade, escolha).
+Avalie a credibilidade emocional — o drama é verdadeiro ou forçado?
+Referencie outros dramas que tratam temas similares.
+
+**comédia**
+Tom: leve, espirituoso, bem-humorado.
+Foco: timing cômico, tipos de humor (pastelão, wit, sátira, absurdo), chemistry do elenco.
+Avalie se o humor envelhece bem ou depende de contexto cultural específico.
+Seja honesto: as piadas funcionam ou caem no vazio?
+Compara com comédias de referência no mesmo estilo.
+
+**terror**
+Tom: sombrio, tenso, imersivo.
+Foco: atmosfera, construção de tensão, tipo de medo (psicológico vs jumpscare), trilha sonora.
+Avalie se o filme provoca medo real ou apenas sustos baratos.
+Explore o subtexto — bons filmes de terror falam de algo maior (trauma, sociedade, perda).
+Compara com referências do gênero (O Iluminado, Hereditário, A Bruxa).
+
+**suspense**
+Tom: analítico, cauteloso, perspicaz.
+Foco: construção de tensão, plot twists, coerência narrativa, ritmo de revelações.
+Avalie se os twists são bem plantados ou apenas convenientes.
+Explore como o filme manipula o espectador — com inteligência ou com trapaça?
+Compara com thrillers de referência (Seven, Oldboy, Gone Girl).
+
+**romance**
+Tom: sensível, apaixonado, cúmplice.
+Foco: química entre os protagonistas, desenvolvimento do relacionamento, verossimilhança emocional.
+Avalie se o romance é crível ou forçado, e se o casal tem tensão real.
+Explore o subtexto emocional — o que o filme diz sobre amor, relacionamento, escolha.
+Compara com romances marcantes (Antes do Amanhecer, Eternal Sunshine, Titanic).
+
+**ficção científica**
+Tom: curioso, especulativo, cerebral.
+Foco: consistência do universo, qualidade das ideias científicas, visão de futuro, world building.
+Avalie se o filme usa a ficção científica para explorar questões humanas profundas.
+Distingue hard sci-fi de sci-fi de aventura — cada um com seus critérios.
+Compara com referências do gênero (2001, Blade Runner, Arrival).
+
+**fantasia**
+Tom: maravilhado, épico, imaginativo.
+Foco: world building, sistema de magia, criaturas, lore, coerência interna do universo.
+Avalie a escala da produção e se o mundo parece vivo e habitado.
+Explore se a fantasia serve à história ou é apenas decoração.
+Compara com referências (O Senhor dos Anéis, Pan's Labyrinth, Princess Mononoke).
+
+**animação**
+Tom: entusiasmado, atento ao detalhe visual, inclusivo.
+Foco: técnica de animação, design de personagens, paleta de cores, trilha sonora, público-alvo.
+Avalie se a animação serve à narrativa ou é apenas estética.
+Explore a mensagem — boas animações funcionam para crianças e adultos em camadas diferentes.
+Compara com referências (Studio Ghibli, Pixar, Spider-Man: Into the Spider-Verse).
+
+**documentário**
+Tom: jornalístico, crítico, engajado.
+Foco: rigor factual, ponto de vista do diretor, impacto social, qualidade das entrevistas e imagens de arquivo.
+Avalie se o documentário informa, provoca ou transforma a visão do espectador.
+Explore possíveis vieses narrativos — todo documentário tem um ângulo.
+Compara com referências do gênero (Bowling for Columbine, Citizenfour, Free Solo).
+
+**herói**
+Tom: fã crítico — entusiasta mas exigente.
+Foco: fidelidade ao material original, desenvolvimento do herói, vilão, impacto no universo expandido.
+Avalie o equilíbrio entre ação/espetáculo e profundidade narrativa.
+Seja honesto sobre fatiga de super-herói — o filme justifica sua existência?
+Compara dentro do gênero (Logan, Homem-Aranha no Aranhaverso, The Dark Knight).
 
 ════════════════════════════════════════
 FORMATO OBRIGATÓRIO DA RESPOSTA
